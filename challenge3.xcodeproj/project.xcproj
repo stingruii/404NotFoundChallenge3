@@ -11,20 +11,20 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "MyApp", "target-membership": [ "MyApp" ] },
+    { "kind": "folder", "path": "challenge3", "target-membership": [ "challenge3" ] },
     {
       "kind": "group",
       "name": "Products",
       "children": [
-        { "path": "<PRODUCTS>/MyApp.app", "id": "000000000000000000000120", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/challenge3.app", "id": "000000000000000000000120", "type": "wrapper.application", "index": false },
       ],
     },
   ],
   "targets": [
     {
-      "name": "MyApp",
+      "name": "challenge3",
       "id": "000000000000000100000000",
-      "product": "Products/MyApp.app",
+      "product": "Products/challenge3.app",
       "product-type": "application",
       "build-phases": [
         "compile-sources",
