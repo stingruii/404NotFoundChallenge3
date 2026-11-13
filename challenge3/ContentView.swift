@@ -1,16 +1,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    //    @Binding var name: String
+    @State private var selectedImage: UIImage? = nil
+    @State private var isShowingCamera = false
+    
     var body: some View {
         TabView {
-            Tab("Home", systemImage: "graduationcap") {
-                Text("Hello")
+            Tab("Home", systemImage: "house") {
+                
+                HomeView()
+//                Button("Take photo"){
+//                    isShowingCamera = true
+////                }
+//                .fullScreenCover(isPresented: $isShowingCamera){
+//                    ZStack{
+//                        CameraView(image: $selectedImage)
+//
+//                        CompositionsView()
+//                            .allowsHitTesting(false)
+//                    }
+//                }
             }
-            Tab("Photo", systemImage: "photo") {
-                Text("Photo")
+            Tab("Gallery", systemImage: "photo.stack") {
+                GalleryView()
             }
             Tab("Profile", systemImage: "person.crop.circle") {
-                Text("Profile")
+                UserProfileView()
             }
         }
     }
@@ -19,4 +36,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-

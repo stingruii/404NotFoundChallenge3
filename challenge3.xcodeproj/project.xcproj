@@ -11,8 +11,21 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "challenge3", "target-membership": [ "challenge3" ] },
     {
+      "kind": "folder",
+      "path": "challenge3",
+      "target-membership": [
+        "challenge3",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "challenge3",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Products",
       "children": [
@@ -38,6 +51,8 @@
         "ENABLE_PREVIEWS": "YES",
         "ENABLE_USER_SELECTED_FILES": "readonly",
         "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "challenge3/Info.plist",
+        "INFOPLIST_KEY_NSCameraUsageDescription": "The app needs the user to use the camera to learn to take photos",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]": "YES",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]": "YES",
