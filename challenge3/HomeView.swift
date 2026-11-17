@@ -9,11 +9,11 @@ import SwiftUI
 import UIKit
 struct HomeView: View {
     @State private var assignmentImages: [String: UIImage] = [:]
-    @State private var pressedButton: String = ""
+    @State var pressedButton: String = ""
     @State private var showExplain = false
     @State private var showCamera = false
     @State private var showResult = false
-    @State private var explainedButtons: Set<String> = []
+    @State var explainedButtons: Set<String> = []
     @State private var cameraImage: UIImage?
     @State private var resultImage: UIImage?
     private var edgeInset: CGFloat {
@@ -1341,18 +1341,22 @@ struct HomeView: View {
             .background(Color(red: 0.902, green: 0.902, blue: 0.980))
             .fullScreenCover(isPresented: $showCamera, onDismiss: cameraClosed) {
                     CameraView(image: $cameraImage)
-                        .overlay(Text("Hiiiiiii")
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
-                            .background {
-                                ChatBubbleShape()
-                                    .fill(Color.black.opacity(0.1))
-                            }
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(.top, edgeInsetForSpeechBubble))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
+//                        .overlay(Text("Hiiiiiii")
+//                            .padding(.horizontal, 12)
+//                            .padding(.vertical, 10)
+//                            .background {
+//                                ChatBubbleShape()
+//                                    .fill(Color.black.opacity(0.1))
+//                            }
+//                            .fixedSize(horizontal: false, vertical: true)
+//                            .padding(.top, edgeInsetForSpeechBubble))
+//                    .overlay(OverlayOverlayView(explainedButtons: .constant(["0"])))
+                    .overlay(OverlayOverlayView(pressedButton: $pressedButton))
             }
             .navigationDestination(isPresented: $showExplain) {
-                ExplainView()
+                ExplainView(pressedButton: $pressedButton)
             }
             .navigationDestination(isPresented: $showResult) {
                 if let resultImage {

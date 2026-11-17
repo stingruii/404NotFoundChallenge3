@@ -10,7 +10,7 @@ import UIKit
 
 var allPhotos: [UIImage] = []
 struct GalleryView: View {
-    @State private var photos: [UIImage] = []
+    @State var photos: [UIImage] = []
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())

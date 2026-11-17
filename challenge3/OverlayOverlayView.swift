@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct OverlayOverlayView: View {
+    
+    @State private var cameraImage: UIImage?
+//    @Binding var explainedButtons: Set<String>
+    @Binding var pressedButton: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            ZStack{
+                CameraView(image: $cameraImage)
+                
+                CompositionsView(pressedButton: .constant("0"))
+                
+                //            ChatBubbleShapeView(/*explainedButtons: $explainedButtons*/)
+                ChatBubbleShapeView(pressedButton: $pressedButton)
+                
+            }
+        }
     }
 }
 
 #Preview {
-    OverlayOverlayView()
+//    OverlayOverlayView(/*explainedButtons: .constant(["0"])*/)
+    OverlayOverlayView(pressedButton: .constant("0"))
 }

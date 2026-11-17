@@ -10,7 +10,7 @@ struct ContentView: View {
         TabView {
             Tab("Home", systemImage: "house") {
                 
-                HomeView()
+                HomeView(/*explainedButtons: .constant("0")*/)
 //                Button("Take photo"){
 //                    isShowingCamera = true
 ////                }

@@ -70,35 +70,38 @@ struct NegativeSpace: Shape{
 }
 
 struct CompositionsView: View {
+    
+    @Binding var pressedButton: String
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack{
                 
-                //
-                //                TheRuleOfThirds()
-                //                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
-                //
-                //                CentreComposition()
-                //                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
-                //                    .frame(width: geometry.size.width / 2, height: geometry.size.height / 3.8)
-                //                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
-                //
-                //                Triangle()
-                //                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
-                //                    .frame(width: geometry.size.width / 4 * 3, height: geometry.size.height / 3)
-                //                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                //                //
+                TheRuleOfThirds()
+                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
                 
-                HStack{
-                    NegativeSpace()
-                        .fill(.black.opacity(0.2))
-                        .stroke(Color.black.opacity(0.5), lineWidth: 2)
-                        .position(x: geometry.size.width / 4, y: geometry.size.height / 4)
-                    
-                    NegativeSpace()
-                        .fill(.black.opacity(0.2))
-                        .stroke(Color.black.opacity(0.5), lineWidth: 2)
-                        .position(x: geometry.size.width / 2, y: geometry.size.height / 4)
-                }
+                //                                CentreComposition()
+                //                                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
+                //                                    .frame(width: geometry.size.width / 2, height: geometry.size.height / 3.8)
+                //                                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                
+                //                                Triangle()
+                //                                    .stroke(Color.black.opacity(0.5), lineWidth: 2)
+                //                                    .frame(width: geometry.size.width / 4 * 3, height: geometry.size.height / 3)
+                //                                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                
+                //                HStack{
+                //                    NegativeSpace()
+                //                        .fill(.black.opacity(0.2))
+                //                        .stroke(Color.black.opacity(0.5), lineWidth: 2)
+                //                        .position(x: geometry.size.width / 4, y: geometry.size.height / 4)
+                //
+                //                    NegativeSpace()
+                //                        .fill(.black.opacity(0.2))
+                //                        .stroke(Color.black.opacity(0.5), lineWidth: 2)
+                //                        .position(x: geometry.size.width / 2, y: geometry.size.height / 4)
+                //                }
                 
             }
         }
@@ -106,5 +109,5 @@ struct CompositionsView: View {
 }
 
 #Preview {
-    CompositionsView()
+    CompositionsView(pressedButton: .constant("0"))
 }

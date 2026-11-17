@@ -22,7 +22,7 @@ struct UserProfileView: View {
                     
                     Toggle("Dark Photos", isOn: $darkIsOn)
                 }
-                Section(header: Text("Lessons completed")) {
+                Section(header: Text("Lessons Completed")) {
                     Text("\(number)/28")
                         .padding()
                         .font(.title)
