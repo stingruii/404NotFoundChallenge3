@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-//struct ChatBubbleShape: Shape {
-//
-//    func path(in rect: CGRect) -> Path {
-//        var path = Path()
-//
-//        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
-//        path.addLine(to: CGPoint(x: rect.midX, y: rect.midY))
-//        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-//        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-//        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-//
-//        return path
-//    }
-//}
-
-
 struct ChatBubbleShape: Shape {
     func path(in rect: CGRect) -> Path {
         let width = rect.width
@@ -88,17 +72,17 @@ struct ChatBubbleShape: Shape {
 
 
 struct ChatBubbleShapeView: View {
-    
+
     //    @Binding var tutorial1: String?
-    
+
     //    @Binding var explainedButtons: Set<String>
     @Binding var pressedButton: String
     @State var notedButton = false
-    
-    private var edgeInset: CGFloat {
-        UIScreen.main.bounds.width / 2
-    }
-    
+
+//    private var edgeInset: CGFloat {
+//        UIScreen.main.bounds.width / 2
+//    }
+
     var body: some View {
         if !notedButton, let text = message {
             bubble(text)
@@ -185,7 +169,6 @@ struct ChatBubbleShapeView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
 }
-
 
 
 #Preview {
