@@ -33,7 +33,9 @@ struct ResultView: View {
     let image: UIImage
     var assignmentImages: Binding<[String: UIImage]>? = nil
     var assignToSlotID: String? = nil
+    var onFinish: (() -> Void)? = nil
 
+    @EnvironmentObject private var photoLibrary: PhotoLibrary
     @Environment(\.dismiss) private var dismiss
 
     @State private var score: Int = 0
@@ -209,7 +211,13 @@ struct ResultView: View {
                 if let assignToSlotID, let assignmentImages {
                     Button("Set to assignment's picture") {
                         assignmentImages.wrappedValue[assignToSlotID] = image
-                        dismiss()
+                        photoLibrary.add(image)
+
+                        if let onFinish {
+                            onFinish()
+                        } else {
+                            dismiss()
+                        }
                     }
                     .font(.system(size: 30))
                     .foregroundColor(.purple)
@@ -298,6 +306,7 @@ struct ResultView: View {
         ResultView(
             image: UIImage(systemName: "photo") ?? UIImage()
         )
+        .environmentObject(PhotoLibrary())
     }
 }
 

@@ -2,15 +2,16 @@ import SwiftUI
 
 struct ContentView: View {
     
-    //    @Binding var name: String
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingCamera = false
+    @StateObject private var photoLibrary = PhotoLibrary()
     
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
                 
                 HomeView(/*explainedButtons: .constant("0")*/)
+                    .environmentObject(photoLibrary)
 //                Button("Take photo"){
 //                    isShowingCamera = true
 ////                }
@@ -25,6 +26,7 @@ struct ContentView: View {
             }
             Tab("Gallery", systemImage: "photo.stack") {
                 GalleryView()
+                    .environmentObject(photoLibrary)
             }
             Tab("Profile", systemImage: "person.crop.circle") {
                 UserProfileView()

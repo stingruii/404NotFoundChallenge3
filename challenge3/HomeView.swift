@@ -1381,8 +1381,6 @@ struct HomeView: View {
     }
     private func resetCapture() {
         cameraImage = nil
-        resultImage = image
-        showResult = true
     }
 }
 #Preview {

@@ -54,7 +54,7 @@
         "ENABLE_USER_SELECTED_FILES": "readonly",
         "GENERATE_INFOPLIST_FILE": "YES",
         "INFOPLIST_FILE": "challenge3/Info.plist",
-        "INFOPLIST_KEY_NSCameraUsageDescription": "The app needs the user to use the camera to learn to take photos",
+        "INFOPLIST_KEY_NSCameraUsageDescription": "The app needs camera access to take photos",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]": "YES",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]": "YES",

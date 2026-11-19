@@ -8,9 +8,9 @@
 import SwiftUI
 import UIKit
 
-var allPhotos: [UIImage] = []
 struct GalleryView: View {
-    @State var photos: [UIImage] = []
+    @EnvironmentObject private var photoLibrary: PhotoLibrary
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -18,7 +18,7 @@ struct GalleryView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if photos.isEmpty {
+                if photoLibrary.photos.isEmpty {
                     ContentUnavailableView(
                         "No Photos Yet",
                         systemImage: "photo.stack",
@@ -29,7 +29,7 @@ struct GalleryView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 15) {
-                            ForEach(photos, id: \.self) { photo in
+                            ForEach(photoLibrary.photos, id: \.self) { photo in
                                 NavigationLink {
                                     ResultView(image: photo)
                                 } label: {
@@ -47,12 +47,10 @@ struct GalleryView: View {
             }
             .navigationTitle("Gallery")
         }
-        .onAppear {
-            photos = allPhotos
-        }
     }
 }
 
 #Preview {
     GalleryView()
+        .environmentObject(PhotoLibrary())
 }

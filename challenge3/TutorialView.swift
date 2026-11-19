@@ -9,7 +9,7 @@ import SwiftUI
 struct TutorialView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var pressedButton: String
-   
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -20,8 +20,8 @@ struct TutorialView: View {
                             .font(.title2)
                             .bold()
                         
-//                            .navigationTitle("Angles")
-//                            .padding()
+                        //                            .navigationTitle("Angles")
+                        //                            .padding()
                         
                         Text(" - A good photo makes use of different angles to create a unique photo from a different perspective - ")
                         
@@ -145,12 +145,11 @@ struct TutorialView: View {
                         //                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         //                        .padding()
                     } else if pressedButton == "6"{
-                        
                         Text("Wide Angle photos:")
                             .padding()
                             .font(.title2)
                             .bold()
-                        Text("To take a wide angle shot, use a wide angle lens with a focal length of 35mm or more / use 0.5x magnification on a phone camera. Anchor the shot with a foreground object, to guide viewers to the background. Wide angle shots are useful for landscape photography, architectural photography and street photography")
+                        Text("To take a wide angle shot, use a wide angle lens with a focal length of 35mm or more / use 0.5x magnification on a phone camera. Anchor the shot with a foreground object, to guide viewers to the background. Wide angle shots are useful for landscape photography, architectural photography and street photography.")
                             .padding()
                         Text("Example")
                             .padding()
@@ -160,15 +159,64 @@ struct TutorialView: View {
                         //                        .scaledToFit()
                         //                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         //                        .padding()
+                    } else if pressedButton == "7"{
+                        Text("The Rule Of Thirds")
+                            .padding()
+                            .font(.title2)
+                            .bold()
+                        Text("The rule of thirds enhances a photo by creating a balanced composition. By placing the main subject along the vertical thirds or at their intersections, or placing the horizon along the horizontal thirds, the photo becomes more visually interesting.")
+                            .padding()
+                        Text("Example")
+                            .padding()
+                            .bold()
+                        //                    Image(.EAB_8_CB_31_02_E_0_4_D_49_9618_A_91147_C_39_E_46)
+                        //                        .resizable()
+                        //                        .scaledToFit()
+                        //                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        //                        .padding()
+                    } else if pressedButton == "8"{
+                        Text("Center Composition")
+                            .padding()
+                            .font(.title2)
+                            .bold()
+                        Text("Center composition draws attention to the subject in the centre of the photo. Center composition is useful for symmetrical environments, where both sides mirror each other.")
+                            .padding()
+                        Text("Example")
+                            .padding()
+                            .bold()
+                        //                    Image(.EAB_8_CB_31_02_E_0_4_D_49_9618_A_91147_C_39_E_46)
+                        //                        .resizable()
+                        //                        .scaledToFit()
+                        //                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        //                        .padding()
+                    } else if pressedButton == "9"{
+                        Text("Frame Within A Frame")
+                            .padding()
+                            .font(.title2)
+                            .bold()
+                        Text("Use surrounding objects such as doorways, windows, arches or branches to create a natural border around your subject. This draws attention towards the subject in the background while adding depth to the photo.")
+                            .padding()
+                        Text("Example")
+                            .padding()
+                            .bold()
+                    } else if pressedButton == "10"{
+                        Text("Negative Space")
+                            .padding()
+                            .font(.title2)
+                            .bold()
+                        Text("Negative space allows for a minimalist style photo. By leaving large areas of empty space around the subject, this allows the subject to stand out. However, negative space can be difficult to master, as the negative space has to complement the subject, while every element has to be intentional. Poor balance can cause the frame to feel empty or lopsided.")
+                            .padding()
+                        Text("Example")
+                            .padding()
+                            .bold()
+                    } else if pressedButton == "11"{
+                        Text("")
                     }
-                    
                 }
-                
             }
         }
     }
 }
-
 #Preview {
     TutorialView(pressedButton: .constant("0"))
 }
