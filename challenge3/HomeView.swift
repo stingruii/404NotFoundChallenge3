@@ -15,7 +15,6 @@ struct HomeView: View {
     @State private var showResult = false
     @State var explainedButtons: Set<String> = []
     @State private var cameraImage: UIImage?
-    @State private var resultImage: UIImage?
     private var edgeInset: CGFloat {
         UIScreen.main.bounds.width / 4
     }
@@ -1339,39 +1338,48 @@ struct HomeView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(red: 0.902, green: 0.902, blue: 0.980))
-            .fullScreenCover(isPresented: $showCamera, onDismiss: cameraClosed) {
-                    CameraView(image: $cameraImage)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
-//                        .overlay(Text("Hiiiiiii")
-//                            .padding(.horizontal, 12)
-//                            .padding(.vertical, 10)
-//                            .background {
-//                                ChatBubbleShape()
-//                                    .fill(Color.black.opacity(0.1))
-//                            }
-//                            .fixedSize(horizontal: false, vertical: true)
-//                            .padding(.top, edgeInsetForSpeechBubble))
-//                    .overlay(OverlayOverlayView(explainedButtons: .constant(["0"])))
-                    .overlay(OverlayOverlayView(pressedButton: $pressedButton))
+            .fullScreenCover(isPresented: $showCamera, onDismiss: resetCapture) {
+                if let capturedImage = cameraImage {
+                    NavigationStack {
+                        ResultView(
+                            image: capturedImage,
+                            assignmentImages: $assignmentImages,
+                            assignToSlotID: pressedButton,
+                            onFinish: {
+                                showCamera = false
+                            }
+                        )
+//                        .sheet(isPresented: $showCamera) {
+//                                    CameraView(
+//                                        image: $cameraImage,
+//                                        dismissAfterCapture: true
+//                                    )
+//                                }
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button {
+                                    cameraImage = nil
+                                } label: {
+                                    Image(systemName: "arrow.counterclockwise")
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    ZStack {
+                        CameraView(image: $cameraImage, dismissAfterCapture: false)
+                        
+                        OverlayOverlayView(pressedButton: $pressedButton)
+                            .ignoresSafeArea()
+                    }
+                }
             }
             .navigationDestination(isPresented: $showExplain) {
-                ExplainView(pressedButton: $pressedButton)
-            }
-            .navigationDestination(isPresented: $showResult) {
-                if let resultImage {
-                    ResultView(
-                        image: resultImage,
-                        assignmentImages: $assignmentImages,
-                        assignToSlotID: pressedButton
-                    )
-                }
+                TutorialView(pressedButton: $pressedButton)
             }
         }
     }
-    private func cameraClosed() {
-        guard let image = cameraImage else { return }
-        allPhotos.insert(image, at: 0)
+    private func resetCapture() {
         cameraImage = nil
         resultImage = image
         showResult = true
