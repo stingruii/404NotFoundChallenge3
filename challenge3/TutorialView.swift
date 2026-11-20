@@ -117,11 +117,6 @@ struct TutorialView: View {
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .padding()
-                        Image(.angles6)
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            .padding()
                     } else if pressedButton == "5"{
                         
                         Text("Dutch Angle photos:")

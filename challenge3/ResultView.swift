@@ -234,7 +234,7 @@ struct ResultView: View {
                 }
                 if analysisFinished {
                     //Dismiss and go to home view
-                    Button("Done"){
+                    Button("Dismiss"){
                         finishLesson(savePhoto: false)
                     }
                     .buttonStyle(.bordered)
