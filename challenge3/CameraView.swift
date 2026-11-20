@@ -10,6 +10,16 @@ import AVFoundation
 import SwiftUI
 import Combine
 
+enum CameraEnvironment {
+    static var isSimulator: Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }
+}
+
 struct CameraView: View {
     
     @Binding var image: UIImage?
@@ -23,8 +33,28 @@ struct CameraView: View {
             //            Color.black
             //                .ignoresSafeArea()
             
-            CameraPreview(session: camera.session)
+            if CameraEnvironment.isSimulator {
+                LinearGradient(
+                    colors: [Color.gray.opacity(0.55), Color.black],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
                 .ignoresSafeArea()
+                .overlay {
+                    VStack(spacing: 10) {
+                        Image(systemName: "camera.fill")
+                            .font(.largeTitle)
+                        Text("Simulator preview")
+                            .font(.headline)
+                        Text("Tap the shutter to use a test photo")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.white)
+                }
+            } else {
+                CameraPreview(session: camera.session)
+                    .ignoresSafeArea()
+            }
             VStack{
                 HStack{
                     Button {
@@ -85,13 +115,15 @@ struct CameraView: View {
                             .frame(width: 62, height: 62)
                     }
                 }
-                .disabled(!camera.isSessionRunning)
-                .opacity(camera.isSessionRunning ? 1 : 0.5)
+                .disabled(!canCapture)
+                .opacity(canCapture ? 1 : 0.5)
                 .padding(.bottom, 32)
             }
         }
         .onAppear {
-            camera.checkAuthorization()
+            if !CameraEnvironment.isSimulator {
+                camera.checkAuthorization()
+            }
         }
         .onDisappear {
             camera.stopSession()
@@ -113,6 +145,10 @@ struct CameraView: View {
         case .auto: return "bolt.badge.a.fill"
         default: return "bolt.slash.fill"
         }
+    }
+
+    private var canCapture: Bool {
+        CameraEnvironment.isSimulator || camera.isSessionRunning
     }
 }
 
@@ -318,6 +354,12 @@ final class CameraController: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
+        // No camera in the Simulator, so hand back a generated test image instead.
+        if CameraEnvironment.isSimulator {
+            capturedImage = CameraController.simulatedPhoto()
+            return
+        }
+
         sessionQueue.async { [weak self] in
             guard let self = self else { return }
             
@@ -398,6 +440,51 @@ final class CameraController: NSObject, ObservableObject {
             } catch {
                 print("Zoom error: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    // MARK: - Simulator support
+
+    static func simulatedPhoto() -> UIImage {
+        let size = CGSize(width: 1080, height: 1920)
+        let renderer = UIGraphicsImageRenderer(size: size)
+
+        return renderer.image { context in
+            let hue = CGFloat.random(in: 0...1)
+            let top = UIColor(hue: hue, saturation: 0.65, brightness: 0.95, alpha: 1)
+            let bottom = UIColor(
+                hue: (hue + 0.25).truncatingRemainder(dividingBy: 1),
+                saturation: 0.75,
+                brightness: 0.55,
+                alpha: 1
+            )
+
+            let colors = [top.cgColor, bottom.cgColor] as CFArray
+            if let gradient = CGGradient(
+                colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                colors: colors,
+                locations: [0, 1]
+            ) {
+                context.cgContext.drawLinearGradient(
+                    gradient,
+                    start: .zero,
+                    end: CGPoint(x: size.width, y: size.height),
+                    options: []
+                )
+            }
+
+            let paragraph = NSMutableParagraphStyle()
+            paragraph.alignment = .center
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.boldSystemFont(ofSize: 88),
+                .foregroundColor: UIColor.white,
+                .paragraphStyle: paragraph
+            ]
+            let text = "Simulated Photo"
+            (text as NSString).draw(
+                in: CGRect(x: 80, y: size.height / 2 - 70, width: size.width - 160, height: 140),
+                withAttributes: attributes
+            )
         }
     }
     

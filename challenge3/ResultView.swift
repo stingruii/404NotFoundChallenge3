@@ -33,7 +33,9 @@ struct ResultView: View {
     let image: UIImage
     var assignmentImages: Binding<[String: UIImage]>? = nil
     var assignToSlotID: String? = nil
+    var completedLessons: Binding<Set<String>>? = nil
     var onFinish: (() -> Void)? = nil
+    var existingReview: PhotoReview? = nil
 
     @EnvironmentObject private var photoLibrary: PhotoLibrary
     @Environment(\.dismiss) private var dismiss
@@ -42,6 +44,7 @@ struct ResultView: View {
 
     // AI properties
     @State private var isAnalyzing = false
+    @State private var analysisFinished = false
     @State private var errorMessage: String? = nil
 
     @State private var aiFeedback: String = ""
@@ -106,7 +109,16 @@ struct ResultView: View {
                     }
                 }
                 .task {
-                    await analysePhoto()
+                    if let existingReview {
+                        score = existingReview.score
+                        aiFeedback = existingReview.feedback
+                        strengths = existingReview.strengths
+                        improvements = existingReview.improvements
+                        analysisFinished = true
+                    } else {
+                        await analysePhoto()
+                        analysisFinished = true
+                    }
                 }
 
                 // MARK: - Error Message
@@ -220,25 +232,25 @@ struct ResultView: View {
 
                     Spacer()
                 }
-
-                // MARK: - Original Assignment Button
-
-                if let assignToSlotID, let assignmentImages {
-                    Button("Set to assignment's picture") {
-                        assignmentImages.wrappedValue[assignToSlotID] = image
-                        photoLibrary.add(image)
-
-                        if let onFinish {
-                            onFinish()
-                        } else {
-                            dismiss()
-                        }
+                if analysisFinished {
+                    //Dismiss and go to home view
+                    Button("Done"){
+                        finishLesson(savePhoto: false)
                     }
                     .buttonStyle(.bordered)
-                    .font(.system(size: 30))
-                    .foregroundColor(.accentColor)
-                    .padding()
-                    .multilineTextAlignment(.center)
+                    
+                    // MARK: - Original Assignment Button
+                    
+                    if assignToSlotID != nil, assignmentImages != nil {
+                        Button("Save") {
+                            finishLesson(savePhoto: true)
+                        }
+                        .buttonStyle(.bordered)
+                        //                    .font(.system(size: 30))
+                        .foregroundColor(.accentColor)
+                        .padding()
+                        .multilineTextAlignment(.center)
+                    }
                 }
             }
             .padding(.horizontal)
@@ -246,6 +258,42 @@ struct ResultView: View {
         }
         .navigationTitle("Result")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    // The review to store with the photo. Nil if analysis hasn't finished.
+    private var currentReview: PhotoReview? {
+        guard !aiFeedback.isEmpty else { return nil }
+        return PhotoReview(
+            score: score,
+            feedback: aiFeedback,
+            strengths: strengths,
+            improvements: improvements
+        )
+    }
+
+    // MARK: - Finish Lesson
+
+    private func finishLesson(savePhoto: Bool) {
+        if let assignToSlotID {
+            // "Save" sets the lesson's circle background; "Done" leaves it empty.
+            if savePhoto, let assignmentImages {
+                assignmentImages.wrappedValue[assignToSlotID] = image
+            }
+
+            // Both buttons add the photo to the library...
+            photoLibrary.add(image, review: currentReview)
+
+            // ...and unlock the next lesson.
+            if let completedLessons {
+                completedLessons.wrappedValue.insert(assignToSlotID)
+            }
+        }
+
+        if let onFinish {
+            onFinish()
+        } else {
+            dismiss()
+        }
     }
 
     // MARK: - Foundation Models AI Analysis
@@ -281,20 +329,21 @@ struct ResultView: View {
                 """
                 Analyse the attached photograph.
 
-                Evaluate:
-                1. Composition
-                2. Lighting
-                3. Focus and clarity
-                4. Colour balance
-                5. Overall visual appeal
+                                Evaluate:
+                                1. Composition
+                                2. Lighting
+                                3. Focus and clarity
+                                4. Colour balance
+                                5. Overall visual appeal
 
-                Give a score between 0 and 10.
-
-                Explain the photograph's strengths.
-                Suggest realistic improvements.
-
-                Be specific and strict.
-                Only describe things visible in the photo.
+                                Evaluate all 5 components, rating them from 0 to 10. Do not reveal the scores of individual components.
+                                Proceed to take the mean of the rating of all 5 components, rounding the mean value to 1 decimal place. This is the final score.
+                                Following this, reveal the final score between 0 and 10.
+                                When evaluating the final score, be strict and maintain professional standards, and only describe the things visible in the photo.
+                                
+                                Provide a short paragraph evaluating the photo, stating specifically and realistically:
+                                The photo's strengths
+                                Realistic areas for improvement
                 """
 
                 Attachment(image)

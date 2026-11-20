@@ -29,11 +29,14 @@ struct GalleryView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 15) {
-                            ForEach(photoLibrary.photos, id: \.self) { photo in
+                            ForEach(photoLibrary.photos) { photo in
                                 NavigationLink {
-                                    ResultView(image: photo)
+                                    ResultView(
+                                        image: photo.image,
+                                        existingReview: photo.review
+                                    )
                                 } label: {
-                                    Image(uiImage: photo)
+                                    Image(uiImage: photo.image)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 175, height: 150)
