@@ -25,8 +25,24 @@ struct CameraView: View {
             
             CameraPreview(session: camera.session)
                 .ignoresSafeArea()
-            
-            VStack {
+            VStack{
+                HStack{
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "arrow.uturn.left")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
+                            .background(.black.opacity(0.4))
+                            .clipShape(Circle())
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.top, 8)
+                
+                
                 HStack {
                     Button {
                         camera.toggleFlash()

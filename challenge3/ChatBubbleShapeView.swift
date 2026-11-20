@@ -164,7 +164,12 @@ struct ChatBubbleShapeView: View {
         .padding(.vertical, 10)
         .background {
             ChatBubbleShape()
-                .fill(Color.black.opacity(0.1))
+                .fill(Color(
+                    red: 0.7,
+                    green: 0.7,
+                    blue: 0.7,
+                    opacity: 1.0
+                ))
         }
         .fixedSize(horizontal: false, vertical: true)
     }

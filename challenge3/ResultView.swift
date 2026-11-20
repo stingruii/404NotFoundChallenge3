@@ -68,31 +68,46 @@ struct ResultView: View {
 
                 // MARK: - AI Analysis Button
 
-                Button {
-                    Task {
-                        await analysePhoto()
-                    }
-                } label: {
-                    HStack {
-                        if isAnalyzing {
+//                Button {
+//                    Task {
+//                        await analysePhoto()
+//                    }
+//                } label: {
+//                    HStack {
+//                        if isAnalyzing {
+//                            ProgressView()
+//                                .tint(.white)
+//                        } else {
+//                            Image(systemName: "sparkles")
+//                        }
+//
+//                        Text(isAnalyzing
+//                             ? "Analysing Photo..."
+//                             : "Analyse My Photo")
+//                    }
+//                    .font(.system(size: 20, weight: .bold))
+//                    .foregroundColor(.white)
+//                    .frame(maxWidth: .infinity)
+//                    .padding()
+//                    .background(Color.blue)
+//                    .clipShape(RoundedRectangle(cornerRadius: 12))
+//                }
+//                .disabled(isAnalyzing)
+                VStack{
+                    if isAnalyzing {
+                        HStack {
                             ProgressView()
-                                .tint(.white)
-                        } else {
-                            Image(systemName: "sparkles")
+                                .tint(.black)
+                            
+                            Text("Analysing Your Photo...")
                         }
-
-                        Text(isAnalyzing
-                             ? "Analysing Photo..."
-                             : "Analyse My Photo")
+                        .foregroundStyle(.black)
+                        .frame(maxWidth: .infinity)
                     }
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                .disabled(isAnalyzing)
+                .task {
+                    await analysePhoto()
+                }
 
                 // MARK: - Error Message
 
@@ -219,8 +234,9 @@ struct ResultView: View {
                             dismiss()
                         }
                     }
+                    .buttonStyle(.bordered)
                     .font(.system(size: 30))
-                    .foregroundColor(.purple)
+                    .foregroundColor(.accentColor)
                     .padding()
                     .multilineTextAlignment(.center)
                 }
@@ -277,7 +293,7 @@ struct ResultView: View {
                 Explain the photograph's strengths.
                 Suggest realistic improvements.
 
-                Be constructive, specific and encouraging.
+                Be specific and strict.
                 Only describe things visible in the photo.
                 """
 

@@ -28,9 +28,9 @@ struct ContentView: View {
                 GalleryView()
                     .environmentObject(photoLibrary)
             }
-            Tab("Profile", systemImage: "person.crop.circle") {
-                UserProfileView()
-            }
+//            Tab("Profile", systemImage: "person.crop.circle") {
+//                UserProfileView()
+//            }
         }
     }
 }
