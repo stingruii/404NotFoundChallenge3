@@ -12,7 +12,7 @@ struct ContentView: View {
                 
 //                HomeView(/*explainedButtons: .constant("0")*/)
 //                    .environmentObject(photoLibrary)
-                TestingView()
+                TestView()
                     .environmentObject(photoLibrary)
 //                Button("Take photo"){
 //                    isShowingCamera = true

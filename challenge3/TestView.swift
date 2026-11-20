@@ -7,16 +7,51 @@
 import SwiftUI
 import UIKit
 
-struct TestingView: View {
+struct TestView: View {
+
     @State private var assignmentImages: [String: UIImage] = [:]
     @State var pressedButton: String = ""
     @State private var tutorialButton: String = ""
+
     @State private var showExplain = false
     @State private var showCamera = false
+
     @State var explainedButtons: Set<String> = []
     @State var completedLessons: Set<String> = []
+
     @State private var cameraImage: UIImage?
     @State private var hasLoadedProgress = false
+
+    private let lessonTitles: [String] = [
+        "Eye level photos",
+        "Close-ups",
+        "Long Shot photos",
+        "Low Angle photos",
+        "High Angle photos",
+        "Dutch Angle photos",
+        "Wide Angle photos",
+        "Rule of Thirds",
+        "Centre Composition",
+        "Frame within a frame",
+        "Negative Space",
+        "Patterns and Repetition",
+        "Diagonal Lines and Triangles",
+        "Isolating the Subject",
+        "Architectural Frames",
+        "Natural Frames",
+        "Human or Animal Shapes",
+        "Tunnels and Underpasses",
+        "Geometric and Fence Lines",
+        "Partial Framing",
+        "Reflective Framing",
+        "Hard Light",
+        "Soft Light",
+        "Front Light",
+        "Side Light",
+        "Back Light",
+        "Natural Light",
+        "Butterfly Lighting"
+    ]
 
     private var edgeInset: CGFloat {
         UIScreen.main.bounds.width / 4
@@ -28,9 +63,15 @@ struct TestingView: View {
 
     private func buttonColor(_ number: Int) -> Color {
         let colors: [Color] = [
-            .red, .orange, .yellow, .green,
-            .blue, .indigo, .purple
+            .red,
+            .orange,
+            .yellow,
+            .green,
+            .blue,
+            .indigo,
+            .purple
         ]
+
         return colors[number % colors.count]
     }
 
@@ -159,7 +200,7 @@ struct TestingView: View {
     }
 
     private var lessonList: some View {
-        ForEach(0...27, id: \.self) { number in
+        ForEach(0..<lessonTitles.count, id: \.self) { number in
             lessonItem(number)
         }
     }
@@ -240,7 +281,10 @@ struct TestingView: View {
                 lessonButton(number, id: id)
 
                 if explainedButtons.contains(id) {
-                    explainButton(id)
+                    explainButton(
+                        id,
+                        title: lessonTitles[number]
+                    )
                 }
 
                 Spacer()
@@ -248,7 +292,10 @@ struct TestingView: View {
                 Spacer()
 
                 if explainedButtons.contains(id) {
-                    explainButton(id)
+                    explainButton(
+                        id,
+                        title: lessonTitles[number]
+                    )
                 }
 
                 lessonButton(number, id: id)
@@ -314,8 +361,11 @@ struct TestingView: View {
         )
     }
 
-    private func explainButton(_ id: String) -> some View {
-        Button("Explain") {
+    private func explainButton(
+        _ id: String,
+        title: String
+    ) -> some View {
+        Button(title) {
             tutorialButton = id
             showExplain = true
         }
@@ -356,5 +406,5 @@ struct TestingView: View {
 }
 
 #Preview {
-    TestingView()
+    TestView()
 }

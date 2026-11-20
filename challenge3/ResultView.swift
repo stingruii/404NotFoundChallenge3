@@ -233,11 +233,15 @@ struct ResultView: View {
                     Spacer()
                 }
                 if analysisFinished {
-                    //Dismiss and go to home view
-                    Button("Dismiss"){
-                        finishLesson(savePhoto: false)
+                    // Reviewing a photo opened from the Gallery: the photo is
+                    // already saved, so hide the Dismiss button entirely.
+                    if existingReview == nil {
+                        //Dismiss and go to home view
+                        Button("Dismiss"){
+                            finishLesson(savePhoto: false)
+                        }
+                        .buttonStyle(.bordered)
                     }
-                    .buttonStyle(.bordered)
                     
                     // MARK: - Original Assignment Button
                     
