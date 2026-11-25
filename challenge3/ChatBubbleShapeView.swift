@@ -80,7 +80,7 @@ struct ChatBubbleShapeView: View {
         case "25":
             return "Place the light source behind the object."
         case "26":
-            return "Use the natrual light."
+            return "Use the natural light."
         case "27":
             return "Place the light source slightly above the camera."
         default:
