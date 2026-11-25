@@ -35,8 +35,7 @@ struct TutorialView: View {
                             .padding()
                             .font(.title2)
                             .bold()
-//                        Text("An eye-level photo creates a familiar perspective. Eye level photos are useful for photographing people and animals.")
-//                            .padding()
+                        
                         Text("When taking an eye level photo, position the eyes in the centre of the image. Keep the background minimal.")
                             .padding()
                         Text("Example")
