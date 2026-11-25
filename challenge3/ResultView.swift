@@ -618,14 +618,14 @@ struct ResultView: View {
         
         Text("\(formatScore(score))/10")
             .font(.system(size: 18, weight: .bold))
-            .foregroundColor(.blue)
+            .foregroundColor(.black)
             .frame(width: 64, height: 64)
             .background(Color.white)
             .clipShape(Circle())
             .overlay(
                 
                 Circle()
-                    .stroke(.blue, lineWidth: 3)
+                    .stroke(score >= 5 ? .green : .red, lineWidth: 3)
             )
             .shadow(radius: 4)
     }
