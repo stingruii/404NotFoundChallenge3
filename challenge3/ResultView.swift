@@ -350,26 +350,27 @@ struct ResultView: View {
                 
                 """
                                 Analyse the attached photograph.
-                
+
                                                 Evaluate:
                                                 1. Composition
                                                 2. Lighting
                                                 3. Focus and clarity
                                                 4. Colour balance
                                                 5. Overall visual appeal
-                
+
                                                 Evaluate all 5 components, rating them from 0 to 10. 
                                                 Proceed to take the mean of the rating of all 5 components, rounding the mean value to 1 decimal place. This is the final score.
                                                 Following this, reveal the final score between 0 and 10.
-                                                When evaluating the final score, be strict and maintain professional standards, and only describe the things visible in the photo.
+                                                When evaluating the final score, be unreasonably strict and maintain professional standards, and only describe the things visible in the photo.
+                                                You are allowed to give bad photos a 1-4/10.
                                                 
                                                 Provide a short paragraph evaluating the photo, stating specifically and realistically:
                                                 The photo's strengths
                                                 Realistic areas for improvement
                                 
-                                                Do not ramble. Keep the feedback as concise and precise as possible, maximum 3 sentences per paragraph.
+                                                Do not ramble. Keep the feedback as concise and precise as possible, maximum 3 sentences per paragraph. 
                                                 If a lot of feedback needs to be provided, provide the main points in bullet points, organised, neat and with a specific flow.
-                """
+                                """
                 
                 Attachment(image)
             }
