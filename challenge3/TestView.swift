@@ -8,6 +8,8 @@ import SwiftUI
 import UIKit
 
 struct TestView: View {
+    
+    @Environment(\.dismiss) private var dismiss
 
     @State private var assignmentImages: [String: UIImage] = [:]
     @State var pressedButton: String = ""
@@ -126,16 +128,26 @@ struct TestView: View {
                         }
                     }
                 } else {
-                    ZStack {
-                        CameraView(
-                            image: $cameraImage,
-                            dismissAfterCapture: false
-                        )
-
-                        OverlayOverlayView(
-                            pressedButton: $pressedButton
-                        )
-                        .ignoresSafeArea()
+                    NavigationStack{
+                        ZStack {
+                            CameraView(
+                                image: $cameraImage,
+                                dismissAfterCapture: false
+                            )
+                            OverlayOverlayView(
+                                pressedButton: $pressedButton
+                            )
+                            .ignoresSafeArea()
+                        }
+                        .toolbar{
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button{
+                                    showCamera = false
+                                } label:{
+                                    Image(systemName: "xmark")
+                                }
+                            }
+                        }
                     }
                 }
             }

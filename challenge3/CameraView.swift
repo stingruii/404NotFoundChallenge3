@@ -58,31 +58,14 @@ struct CameraView: View {
             VStack{
                 HStack{
                     Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "arrow.uturn.left")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .frame(width: 44, height: 44)
-                            .background(.black.opacity(0.4))
-                            .clipShape(Circle())
-                    }
-                    Spacer()
-                }
-                .padding(.horizontal)
-                .padding(.top, 8)
-                
-                
-                HStack {
-                    Button {
                         camera.toggleFlash()
                     } label: {
                         Image(systemName: flashIcon)
                             .font(.title2)
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .frame(width: 44, height: 44)
-                            .background(.black.opacity(0.4))
                             .clipShape(Circle())
+                            .glassEffect()
                     }
                     
                     Spacer()
@@ -92,10 +75,10 @@ struct CameraView: View {
                     } label: {
                         Image(systemName: "arrow.triangle.2.circlepath.camera")
                             .font(.title2)
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .frame(width: 44, height: 44)
-                            .background(.black.opacity(0.4))
                             .clipShape(Circle())
+                            .glassEffect()
                     }
                 }
                 .padding(.horizontal)
@@ -128,6 +111,7 @@ struct CameraView: View {
         .onDisappear {
             camera.stopSession()
         }
+        //*//
         .onChange(of: camera.capturedImage) { _, newImage in
             guard let newImage = newImage else { return }
             image = newImage
@@ -172,8 +156,10 @@ struct CameraView: View {
 
 struct CameraPreview: UIViewRepresentable {
     let session: AVCaptureSession
+    // specify the type (let 67: Int)
     
     func makeUIView(context: Context) -> PreviewView {
+        //swiftui needs uikit to create this ui view and display the preview
         let view = PreviewView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
@@ -250,13 +236,16 @@ final class CameraController: NSObject, ObservableObject {
     private var currentInput: AVCaptureDeviceInput?
     
     // Queue for session configuration (off main thread)
-    private let sessionQueue = DispatchQueue(label: "com.customcamera.sessionQueue")
+    // waiting to be executed
+    private let sessionQueue = DispatchQueue(label: "com.customcamera.sessionQueue") // queue's namee
     private var isConfigured = false
-    
-    override init() {
-        super.init()
-    }
-    
+//    
+//    //literally overriding
+//    override init() {
+//        super.init() //<- inherit from parent
+//    }
+//    
+    //*//
     func checkAuthorization() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
@@ -282,7 +271,7 @@ final class CameraController: NSObject, ObservableObject {
         }
     }
     
-    
+    //*
     private func setupSession() {
         sessionQueue.async { [weak self] in
             guard let self = self else { return }
@@ -316,7 +305,7 @@ final class CameraController: NSObject, ObservableObject {
             }
             
             if self.session.canAddOutput(self.photoOutput) {
-                self.session.addOutput(self.photoOutput)
+                self.session.addOutput(self.photoOutput) //add photo output to the capture session
                 
                 // Configure photo output settings
                 if let maxDimensions = camera.activeFormat.supportedMaxPhotoDimensions
