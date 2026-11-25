@@ -9,6 +9,8 @@ import UIKit
 
 struct TestView: View {
     
+    var onShowOnboarding: (() -> Void)? = nil
+    
     @Environment(\.dismiss) private var dismiss
 
     @State private var assignmentImages: [String: UIImage] = [:]
@@ -166,6 +168,16 @@ struct TestView: View {
                 TutorialView(
                     pressedButton: $tutorialButton
                 )
+            }
+            .toolbar {
+                if let onShowOnboarding {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: onShowOnboarding) {
+                            Image(systemName: "questionmark.circle")
+                        }
+                        .accessibilityLabel("How to play")
+                    }
+                }
             }
         }
         .fullScreenCover(isPresented: $showEnding) {
@@ -346,9 +358,11 @@ struct TestView: View {
                 showExplain = true
             }
         } label: {
-            Circle()
-                .fill(buttonColor(number).gradient)
+            Image(systemName: "pawprint.circle")
+                .resizable()
+                .scaledToFit()
                 .frame(width: 100, height: 100)
+                .foregroundStyle(buttonColor(number).gradient)
                 .shadow(
                     color: buttonColor(number).opacity(0.8),
                     radius: 12
@@ -361,13 +375,6 @@ struct TestView: View {
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
                     }
-                }
-                .overlay {
-                    Circle()
-                        .stroke(
-                            Color.white.opacity(0.45),
-                            lineWidth: 1.5
-                        )
                 }
         }
         .buttonStyle(.plain)

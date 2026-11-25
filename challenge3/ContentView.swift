@@ -6,14 +6,19 @@ struct ContentView: View {
     @State private var isShowingCamera = false
     @StateObject private var photoLibrary = PhotoLibrary()
     
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @State private var isShowingOnboarding = false
+    
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
                 
 //                HomeView(/*explainedButtons: .constant("0")*/)
 //                    .environmentObject(photoLibrary)
-                TestView()
-                    .environmentObject(photoLibrary)
+                TestView(onShowOnboarding: {
+                    isShowingOnboarding = true
+                })
+                .environmentObject(photoLibrary)
 //                Button("Take photo"){
 //                    isShowingCamera = true
 ////                }
@@ -33,6 +38,17 @@ struct ContentView: View {
 //            Tab("Profile", systemImage: "person.crop.circle") {
 //                UserProfileView()
 //            }
+        }
+        .fullScreenCover(isPresented: $isShowingOnboarding) {
+            OnboardingView {
+                hasCompletedOnboarding = true
+                isShowingOnboarding = false
+            }
+        }
+        .onAppear {
+            if !hasCompletedOnboarding {
+                isShowingOnboarding = true
+            }
         }
     }
 }
