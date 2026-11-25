@@ -9,8 +9,20 @@ import SwiftUI
 
 struct EndingView: View {
     
+    var onClose: (() -> Void)? = nil
+
     @AppStorage("username") var username = ""
     @State var isShown = false
+
+    @Environment(\.dismiss) private var dismiss
+
+    private func close() {
+        if let onClose {
+            onClose()
+        } else {
+            dismiss()
+        }
+    }
     
     var body: some View {
         NavigationStack{
@@ -25,10 +37,20 @@ struct EndingView: View {
                     isShown = true
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        close()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
             .navigationDestination(isPresented: $isShown){
                 ZStack{
-                    CertificationView(username: $username)
+                    CertificationView(username: $username, onClose: close)
                     ConfettiView()
+                        .ignoresSafeArea()
                 }
             }
         }
@@ -38,7 +60,19 @@ struct EndingView: View {
 struct CertificationView: View {
     
     @Binding var username: String
+    var onClose: (() -> Void)? = nil
+
     let currentDate = getCurrentDate()
+
+    @Environment(\.dismiss) private var dismiss
+
+    private func close() {
+        if let onClose {
+            onClose()
+        } else {
+            dismiss()
+        }
+    }
     
     var body: some View{
         ZStack{
@@ -54,7 +88,7 @@ struct CertificationView: View {
                 Text("\(username)")
                     .underline()
                     .padding()
-                Text("For completing the FlickerFox photo taking tutorial.")
+                Text("Thank you for following along and remember to continue learning on your photography journey!")
                     .padding()
                 
                 HStack{
@@ -65,9 +99,14 @@ struct CertificationView: View {
                     Text("Date: \(currentDate)")
                 }
             }
-
-            ConfettiView()
-                .ignoresSafeArea()
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Done") {
+                    close()
+                }
+                .bold()
+            }
         }
     }
 }
