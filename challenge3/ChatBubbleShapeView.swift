@@ -7,88 +7,24 @@
 
 import SwiftUI
 
-struct ChatBubbleShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        let width = rect.width
-        let height = rect.height
-        
-        let scale = min(width, height) / 100
-        
-        let corner = 20 * scale
-        let inset = 4 * scale
-        let tailStart = 25 * scale
-        let tailEnd = 11 * scale
-        
-        return Path { p in
-            p.move(to: CGPoint(x: tailStart, y: height))
-            
-            p.addLine(to: CGPoint(x: width - corner, y: height))
-            p.addCurve(
-                to: CGPoint(x: width, y: height - corner),
-                control1: CGPoint(x: width - 8 * scale, y: height),
-                control2: CGPoint(x: width, y: height - 8 * scale)
-            )
-            
-            p.addLine(to: CGPoint(x: width, y: corner))
-            p.addCurve(
-                to: CGPoint(x: width - corner, y: 0),
-                control1: CGPoint(x: width, y: 8 * scale),
-                control2: CGPoint(x: width - 8 * scale, y: 0)
-            )
-            
-            p.addLine(to: CGPoint(x: corner + scale, y: 0))
-            p.addCurve(
-                to: CGPoint(x: inset, y: corner),
-                control1: CGPoint(x: 12 * scale, y: 0),
-                control2: CGPoint(x: inset, y: 8 * scale)
-            )
-            
-            p.addLine(to: CGPoint(x: inset, y: height - tailEnd))
-            
-            p.addCurve(
-                to: CGPoint(x: 0, y: height),
-                control1: CGPoint(x: inset, y: height - scale),
-                control2: CGPoint(x: 0, y: height)
-            )
-            
-            p.addLine(to: CGPoint(x: -0.05 * scale, y: height - 0.01 * scale))
-            
-            p.addCurve(
-                to: CGPoint(x: tailEnd, y: height - 4 * scale),
-                control1: CGPoint(x: 4 * scale, y: height + 0.5 * scale),
-                control2: CGPoint(x: 8 * scale, y: height - scale)
-            )
-            
-            p.addCurve(
-                to: CGPoint(x: tailStart, y: height),
-                control1: CGPoint(x: 16 * scale, y: height),
-                control2: CGPoint(x: 20 * scale, y: height)
-            )
-            
-            p.closeSubpath()
-        }
-    }
-}
-
-
 struct ChatBubbleShapeView: View {
-
+    
     //    @Binding var tutorial1: String?
-
+    
     //    @Binding var explainedButtons: Set<String>
     @Binding var pressedButton: String
     @State var notedButton = false
-
-//    private var edgeInset: CGFloat {
-//        UIScreen.main.bounds.width / 2
-//    }
-
+    
+    //    private var edgeInset: CGFloat {
+    //        UIScreen.main.bounds.width / 2
+    //    }
+    
     var body: some View {
         if !notedButton, let text = message {
             bubble(text)
         }
     }
-
+    
     private var message: String? {
         switch pressedButton {
         case "0":
@@ -144,14 +80,14 @@ struct ChatBubbleShapeView: View {
         case "25":
             return "Place the light source behind the object."
         case "26":
-            return "Use the natrual light."
+            return "Use the natural light."
         case "27":
             return "Place the light source slightly above the camera."
         default:
             return nil
         }
     }
-
+    
     private func bubble(_ text: String) -> some View {
         VStack {
             Text(text)
@@ -160,12 +96,11 @@ struct ChatBubbleShapeView: View {
             }
             .padding(.leading, 300)
         }
-        .padding(.horizontal, 15)
-        .padding(.vertical, 10)
-        .background {
-            ChatBubbleShape()
-                .fill(Color.black.opacity(0.1))
-        }
+//        .padding(.horizontal, 15)
+//        .padding(.vertical, 10)
+        .padding()
+        .glassEffect()
+        .clipShape(Rectangle())
         .fixedSize(horizontal: false, vertical: true)
     }
 }

@@ -1,0 +1,126 @@
+{
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "Rectangle 4.svg",
+          "name" : "Rectangle 4",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              104.74949963880488,
+              -135.0891881289092
+            ]
+          }
+        },
+        {
+          "fill-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.00000,0.00000,0.00000,0.18125"
+              }
+            }
+          ],
+          "hidden" : false,
+          "image-name" : "Ellipse 7.svg",
+          "name" : "Ellipse 7",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -260.66368550570826,
+              -25.29472964469994
+            ]
+          }
+        },
+        {
+          "image-name" : "Rectangle 5.svg",
+          "name" : "Rectangle 5",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              295.7063350509519,
+              125.65826613164859
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "Polygon 22.svg",
+          "name" : "Polygon 22",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              295.7494996388049,
+              104.15568441951336
+            ]
+          }
+        },
+        {
+          "image-name" : "Union.svg",
+          "name" : "Union",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -234,
+              -1
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "Polygon 23.svg",
+          "name" : "Polygon 23",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -96.98236986791619,
+              -112.00000000000006
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "Rectangle 2.svg",
+          "name" : "Rectangle 2",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -8.028273539782617,
+              52.155684419513136
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "Rectangle 3.svg",
+          "name" : "Rectangle 3",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              88.74949963880488,
+              -212.3443155804868
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.3
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

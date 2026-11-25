@@ -14,12 +14,17 @@ struct HomeView: View {
     @State private var showCamera = false
     @State private var showResult = false
     @State var explainedButtons: Set<String> = []
+    @State var completedLessons: Set<String> = []
     @State private var cameraImage: UIImage?
+    @State private var hasLoadedProgress = false
     private var edgeInset: CGFloat {
         UIScreen.main.bounds.width / 4
     }
     private var edgeInsetForSpeechBubble: CGFloat {
         UIScreen.main.bounds.width / 1.5
+    }
+    private func hasFinished(_ id: String) -> Bool {
+        completedLessons.contains(id)
     }
     var body: some View {
         NavigationStack {
@@ -123,6 +128,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("0"))
+                        .opacity(hasFinished("0") ? 1 : 0.35)
+                        .grayscale(hasFinished("0") ? 0 : 1)
                         if explainedButtons.contains("1") {
                             Button("Explain") {
                                 showExplain = true
@@ -178,6 +186,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("1"))
+                        .opacity(hasFinished("1") ? 1 : 0.35)
+                        .grayscale(hasFinished("1") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -209,6 +220,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("2"))
+                        .opacity(hasFinished("2") ? 1 : 0.35)
+                        .grayscale(hasFinished("2") ? 0 : 1)
                         if explainedButtons.contains("3") {
                             Button("Explain") {
                                 showExplain = true
@@ -264,6 +278,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("3"))
+                        .opacity(hasFinished("3") ? 1 : 0.35)
+                        .grayscale(hasFinished("3") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -295,6 +312,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("4"))
+                        .opacity(hasFinished("4") ? 1 : 0.35)
+                        .grayscale(hasFinished("4") ? 0 : 1)
                         if explainedButtons.contains("5") {
                             Button("Explain") {
                                 showExplain = true
@@ -351,6 +371,9 @@ struct HomeView: View {
                                     }
                             }
                             .buttonStyle(.plain)
+                            .disabled(!hasFinished("5"))
+                            .opacity(hasFinished("5") ? 1 : 0.35)
+                            .grayscale(hasFinished("5") ? 0 : 1)
                         }
                         .padding(.trailing, edgeInset)
                         HStack {
@@ -407,6 +430,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("6"))
+                        .opacity(hasFinished("6") ? 1 : 0.35)
+                        .grayscale(hasFinished("6") ? 0 : 1)
                         if explainedButtons.contains("7") {
                             Button("Explain") {
                                 showExplain = true
@@ -462,6 +488,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("7"))
+                        .opacity(hasFinished("7") ? 1 : 0.35)
+                        .grayscale(hasFinished("7") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -493,6 +522,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("8"))
+                        .opacity(hasFinished("8") ? 1 : 0.35)
+                        .grayscale(hasFinished("8") ? 0 : 1)
                         if explainedButtons.contains("9") {
                             Button("Explain") {
                                 showExplain = true
@@ -548,6 +580,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("9"))
+                        .opacity(hasFinished("9") ? 1 : 0.35)
+                        .grayscale(hasFinished("9") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -579,6 +614,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("10"))
+                        .opacity(hasFinished("10") ? 1 : 0.35)
+                        .grayscale(hasFinished("10") ? 0 : 1)
                         if explainedButtons.contains("11") {
                             Button("Explain") {
                                 showExplain = true
@@ -634,22 +672,13 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("11"))
+                        .opacity(hasFinished("11") ? 1 : 0.35)
+                        .grayscale(hasFinished("11") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     VStack(spacing: 70) {
                         HStack {
-                            Spacer()
-                            if explainedButtons.contains("13") {
-                                Button("Explain") {
-                                    showExplain = true
-                                }
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(.cyan)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
-                                .background(Color.white.opacity(0.12))
-                                .clipShape(Capsule())
-                            }
                             Button {
                                 pressedButton = "13"
                                 if explainedButtons.contains("13") {
@@ -678,8 +707,23 @@ struct HomeView: View {
                                     }
                             }
                             .buttonStyle(.plain)
+                            .disabled(!hasFinished("12"))
+                            .opacity(hasFinished("12") ? 1 : 0.35)
+                            .grayscale(hasFinished("12") ? 0 : 1)
+                            if explainedButtons.contains("13") {
+                                Button("Explain") {
+                                    showExplain = true
+                                }
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(.cyan)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.white.opacity(0.12))
+                                .clipShape(Capsule())
+                            }
+                            Spacer()
                         }
-                        .padding(.trailing, edgeInset)
+                        .padding(.leading, edgeInset)
                         HStack {
                             Spacer()
                             RoundedRectangle(cornerRadius: 16)
@@ -746,6 +790,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("13"))
+                        .opacity(hasFinished("13") ? 1 : 0.35)
+                        .grayscale(hasFinished("13") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -777,6 +824,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("14"))
+                        .opacity(hasFinished("14") ? 1 : 0.35)
+                        .grayscale(hasFinished("14") ? 0 : 1)
                         if explainedButtons.contains("15") {
                             Button("Explain") {
                                 showExplain = true
@@ -832,6 +882,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("15"))
+                        .opacity(hasFinished("15") ? 1 : 0.35)
+                        .grayscale(hasFinished("15") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -863,6 +916,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("16"))
+                        .opacity(hasFinished("16") ? 1 : 0.35)
+                        .grayscale(hasFinished("16") ? 0 : 1)
                         if explainedButtons.contains("17") {
                             Button("Explain") {
                                 showExplain = true
@@ -918,6 +974,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("17"))
+                        .opacity(hasFinished("17") ? 1 : 0.35)
+                        .grayscale(hasFinished("17") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -949,6 +1008,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("18"))
+                        .opacity(hasFinished("18") ? 1 : 0.35)
+                        .grayscale(hasFinished("18") ? 0 : 1)
                         if explainedButtons.contains("19") {
                             Button("Explain") {
                                 showExplain = true
@@ -1005,6 +1067,9 @@ struct HomeView: View {
                                     }
                             }
                             .buttonStyle(.plain)
+                            .disabled(!hasFinished("19"))
+                            .opacity(hasFinished("19") ? 1 : 0.35)
+                            .grayscale(hasFinished("19") ? 0 : 1)
                         }
                         .padding(.trailing, edgeInset)
                         HStack {
@@ -1061,6 +1126,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("20"))
+                        .opacity(hasFinished("20") ? 1 : 0.35)
+                        .grayscale(hasFinished("20") ? 0 : 1)
                         if explainedButtons.contains("21") {
                             Button("Explain") {
                                 showExplain = true
@@ -1116,6 +1184,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("21"))
+                        .opacity(hasFinished("21") ? 1 : 0.35)
+                        .grayscale(hasFinished("21") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -1147,6 +1218,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("22"))
+                        .opacity(hasFinished("22") ? 1 : 0.35)
+                        .grayscale(hasFinished("22") ? 0 : 1)
                         if explainedButtons.contains("23") {
                             Button("Explain") {
                                 showExplain = true
@@ -1202,6 +1276,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("23"))
+                        .opacity(hasFinished("23") ? 1 : 0.35)
+                        .grayscale(hasFinished("23") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -1233,6 +1310,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("24"))
+                        .opacity(hasFinished("24") ? 1 : 0.35)
+                        .grayscale(hasFinished("24") ? 0 : 1)
                         if explainedButtons.contains("25") {
                             Button("Explain") {
                                 showExplain = true
@@ -1288,6 +1368,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("25"))
+                        .opacity(hasFinished("25") ? 1 : 0.35)
+                        .grayscale(hasFinished("25") ? 0 : 1)
                     }
                     .padding(.trailing, edgeInset)
                     HStack {
@@ -1319,6 +1402,9 @@ struct HomeView: View {
                                 }
                         }
                         .buttonStyle(.plain)
+                        .disabled(!hasFinished("26"))
+                        .opacity(hasFinished("26") ? 1 : 0.35)
+                        .grayscale(hasFinished("26") ? 0 : 1)
                         if explainedButtons.contains("27") {
                             Button("Explain") {
                                 showExplain = true
@@ -1345,6 +1431,7 @@ struct HomeView: View {
                             image: capturedImage,
                             assignmentImages: $assignmentImages,
                             assignToSlotID: pressedButton,
+                            completedLessons: $completedLessons,
                             onFinish: {
                                 showCamera = false
                             }
@@ -1378,6 +1465,31 @@ struct HomeView: View {
                 TutorialView(pressedButton: $pressedButton)
             }
         }
+        .onAppear {
+            if !hasLoadedProgress {
+                hasLoadedProgress = true
+                loadProgress()
+            }
+        }
+        .onChange(of: explainedButtons) { saveProgress() }
+        .onChange(of: completedLessons) { saveProgress() }
+        .onChange(of: assignmentImages) { saveProgress() }
+    }
+    private func loadProgress() {
+        let progress = LessonProgressStorage.load()
+        explainedButtons = progress.explainedButtons
+        completedLessons = progress.completedLessons
+        assignmentImages = progress.assignmentImages.compactMapValues { UIImage(data: $0) }
+    }
+    private func saveProgress() {
+        let progress = LessonProgress(
+            explainedButtons: explainedButtons,
+            completedLessons: completedLessons,
+            assignmentImages: assignmentImages.mapValues {
+                $0.normalizedJPEGData() ?? $0.pngData() ?? Data()
+            }
+        )
+        LessonProgressStorage.save(progress)
     }
     private func resetCapture() {
         cameraImage = nil
