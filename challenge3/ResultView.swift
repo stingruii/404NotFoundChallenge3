@@ -623,7 +623,6 @@ struct ResultView: View {
             .background(Color.white)
             .clipShape(Circle())
             .overlay(
-                
                 Circle()
                     .stroke(score >= 5 ? .green : .red, lineWidth: 3)
             )
