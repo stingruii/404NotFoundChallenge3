@@ -31,31 +31,24 @@ struct HomeView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
                     Spacer()
-                    Spacer()
                     HStack {
                         Spacer()
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(
-                                Color.black
-                            )
-                            .frame(width: 300, height: 90)
-                            .shadow(color: Color.gray.opacity(0.7), radius: 20, y: 8)
-                            .overlay {
+        
                                 HStack(spacing: 6) {
                                     Text("Angle")
-                                        .foregroundColor(.white)
-                                        .font(.largeTitle)
+                                        .foregroundColor(.black)
+                                        .font(.system(size: 50).bold())
                                     Image(systemName: "angle")
-                                        .font(.largeTitle.bold())
-                                        .foregroundColor(.white)
+                                        .font(.system(size: 50).bold())
+                                        .foregroundColor(.black)
                                 }
-                            }
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.white.opacity(0.35), lineWidth: 1)
-                            }
-                        Spacer()
+                            
+                                Spacer()
+                            
+                        
+                        
                     }
+                    Spacer()
                     HStack {
                         Spacer()
                         if explainedButtons.contains("0") {
@@ -378,28 +371,21 @@ struct HomeView: View {
                         .padding(.trailing, edgeInset)
                         HStack {
                             Spacer()
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    Color.black
-                                )
-                                .frame(width: 300, height: 90)
-                                .shadow(color: Color.gray.opacity(0.7), radius: 20, y: 8)
-                                .overlay {
+                            
                                     HStack(spacing: 6) {
                                         Text("Composition")
-                                            .foregroundColor(.white)
-                                            .font(.largeTitle)
+                                            .foregroundColor(.black)
+                                            .font(.system(size: 50).bold())
                                         Image(systemName: "aspectratio")
-                                            .font(.title3.bold())
-                                            .foregroundColor(.white)
-                                    }
+                                            .font(.system(size: 50).bold())
+                                            .foregroundColor(.black)
+                                    
                                 }
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
-                                }
+                                
+                                
                             Spacer()
                         }
+                        Spacer()
                     }
                     HStack {
                         Button {
@@ -726,28 +712,19 @@ struct HomeView: View {
                         .padding(.leading, edgeInset)
                         HStack {
                             Spacer()
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    Color.black
-                                )
-                                .frame(width: 300, height: 90)
-                                .shadow(color: Color.gray.opacity(0.7), radius: 20, y: 8)
-                                .overlay {
+                            
                                     HStack(spacing: 6) {
                                         Text("Framing")
-                                            .foregroundColor(.white)
-                                            .font(.largeTitle)
+                                            .foregroundColor(.black)
+                                            .font(.system(size: 50).bold())
                                         Image(systemName: "photo.artframe")
-                                            .font(.title3.bold())
-                                            .foregroundColor(.white)
+                                            .font(.system(size: 50).bold())
+                                            .foregroundColor(.black)
                                     }
-                                }
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
-                                }
+                                
                             Spacer()
                         }
+                        Spacer()
                     }
                     HStack {
                         Spacer()
@@ -1074,28 +1051,18 @@ struct HomeView: View {
                         .padding(.trailing, edgeInset)
                         HStack {
                             Spacer()
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    Color.black
-                                )
-                                .frame(width: 300, height: 90)
-                                .shadow(color: Color.gray.opacity(0.7), radius: 20, y: 8)
-                                .overlay {
                                     HStack(spacing: 6) {
                                         Text("Lighting")
-                                            .foregroundColor(.white)
-                                            .font(.largeTitle)
+                                            .foregroundColor(.black)
+                                            .font(.system(size: 50).bold())
                                         Image(systemName: "sun.max.fill")
-                                            .font(.title3.bold())
-                                            .foregroundColor(.white)
+                                            .font(.system( size:50).bold())
+                                            .foregroundColor(.black)
                                     }
-                                }
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
-                                }
+                                
                             Spacer()
                         }
+                        Spacer()
                     }
                     HStack {
                         Button {

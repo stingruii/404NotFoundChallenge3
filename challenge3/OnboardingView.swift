@@ -246,6 +246,7 @@ struct OnboardingView: View {
                 Button {
                     if isLastPage {
                         finish()
+                    
                     } else {
                         withAnimation {
                             page += 1
@@ -253,15 +254,16 @@ struct OnboardingView: View {
                     }
                 } label: {
                     HStack(spacing: 8) {
-                        Text(isLastPage ? "Start learning" : "Next")
-                            .font(.headline)
-
-                        Image(
-                            systemName: isLastPage
-                            ? "sparkles"
-                            : "arrow.right"
-                        )
-                    }
+                        
+                            Text(isLastPage ? "Start learning" : "Next")
+                                .font(.headline)
+                            Image(
+                                systemName: isLastPage
+                                ? "sparkles"
+                                : "arrow.right"
+                            )}
+                    
+                        
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 52)
@@ -589,6 +591,7 @@ struct OnboardingView: View {
 
     private func finish() {
         onFinish()
+        
     }
 }
 
