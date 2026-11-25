@@ -24,6 +24,9 @@ struct TestView: View {
     @State private var cameraImage: UIImage?
     @State private var hasLoadedProgress = false
 
+    @State private var showEnding = false
+    @State private var presentEndingAfterDismiss = false
+
     private let lessonTitles: [String] = [
         "Eye level photos",
         "Close-ups",
@@ -100,7 +103,7 @@ struct TestView: View {
             )
             .fullScreenCover(
                 isPresented: $showCamera,
-                onDismiss: resetCapture
+                onDismiss: handleCameraDismiss
             ) {
                 if let capturedImage = cameraImage {
                     NavigationStack {
@@ -110,6 +113,12 @@ struct TestView: View {
                             assignToSlotID: pressedButton,
                             completedLessons: $completedLessons,
                             onFinish: {
+                                // Finishing the final lesson opens the ending flow
+                                // once the result screen has been dismissed.
+                                if pressedButton == String(lessonTitles.count - 1) {
+                                    presentEndingAfterDismiss = true
+                                }
+
                                 showCamera = false
                             }
                         )
@@ -158,6 +167,9 @@ struct TestView: View {
                     pressedButton: $tutorialButton
                 )
             }
+        }
+        .fullScreenCover(isPresented: $showEnding) {
+            EndingView(onClose: { showEnding = false })
         }
         .onAppear {
             if !hasLoadedProgress {
@@ -414,6 +426,21 @@ struct TestView: View {
 
     private func resetCapture() {
         cameraImage = nil
+    }
+
+    private func handleCameraDismiss() {
+        resetCapture()
+
+        guard presentEndingAfterDismiss else { return }
+
+        presentEndingAfterDismiss = false
+
+        // Give the first cover time to finish dismissing before
+        // presenting the ending flow.
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(350))
+            showEnding = true
+        }
     }
 }
 
