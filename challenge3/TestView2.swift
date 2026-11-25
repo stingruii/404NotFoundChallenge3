@@ -199,7 +199,7 @@ struct TestView2: View {
             Spacer()
 
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.black)
+                .fill(Color.accentcolor0)
                 .frame(width: 300, height: 90)
                 .shadow(
                     color: Color.gray.opacity(0.7),
