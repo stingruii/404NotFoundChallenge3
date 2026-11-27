@@ -29,6 +29,14 @@ struct TestView: View {
     @State private var showEnding = false
     @State private var presentEndingAfterDismiss = false
 
+    @AppStorage("hasShownEnding") private var hasShownEnding = false
+    
+//    private let forest = Color(red: 0.10, green: 0.3, blue: 0.15)
+//    private let moss = Color(red: 0.30, green: 0.43, blue: 0.29)
+//    private let cream = Color(red: 0.792, green: 0.306, blue: 0.2)
+//    private let brown = Color(red: 0.596, green: 0.337, blue: 0.161)
+//    private let gold = Color(red: 0.91, green: 0.67, blue: 0.32)
+
     private let lessonTitles: [String] = [
         "Eye level photos",
         "Close-ups",
@@ -70,6 +78,10 @@ struct TestView: View {
 
     private func buttonColor(_ number: Int) -> Color {
         let colors: [Color] = [
+//            brown,
+//            moss,
+//            cream,
+//            gold
             .red,
             .orange,
             .yellow,
@@ -77,6 +89,7 @@ struct TestView: View {
             .blue,
             .indigo,
             .purple
+
         ]
 
         return colors[number % colors.count]
@@ -86,10 +99,10 @@ struct TestView: View {
         NavigationStack {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
-                    Spacer()
-                    Spacer()
 
                     titleHeader
+                    
+                    Spacer()
 
                     lessonList
                 }
@@ -102,6 +115,7 @@ struct TestView: View {
                     green: 0.902,
                     blue: 0.980
                 )
+//                Color(red: 0.96, green: 0.95, blue: 0.88)
             )
             .fullScreenCover(
                 isPresented: $showCamera,
@@ -115,9 +129,14 @@ struct TestView: View {
                             assignToSlotID: pressedButton,
                             completedLessons: $completedLessons,
                             onFinish: {
-                                // Finishing the final lesson opens the ending flow
-                                // once the result screen has been dismissed.
-                                if pressedButton == String(lessonTitles.count - 1) {
+                                let finishedAllLessons = lessonTitles.indices.allSatisfy {
+                                    completedLessons.contains(String($0))
+                                }
+
+                                // Only present the ending the first time every
+                                // lesson has been completed.
+                                if finishedAllLessons && !hasShownEnding {
+                                    hasShownEnding = true
                                     presentEndingAfterDismiss = true
                                 }
 
@@ -175,7 +194,6 @@ struct TestView: View {
                         Button(action: onShowOnboarding) {
                             Image(systemName: "questionmark.circle")
                         }
-                        .accessibilityLabel("How to play")
                     }
                 }
             }
@@ -201,24 +219,53 @@ struct TestView: View {
     }
 
     private var titleHeader: some View {
-        VStack {
+        HStack {
             Spacer()
-                
-                HStack(spacing: 6) {
-                    Text("Angle")
-                        .foregroundColor(.black)
-                        .font(.system(size: 50).bold())
-                    Image(systemName: "angle")
-                        .font(.system(size: 50).bold())
-                        .foregroundColor(.black)
+
+            RoundedRectangle(cornerRadius: 16)
+                .glassEffect(in: .rect(cornerRadius: 16))
+                .frame(width: 300, height: 90)
+                .shadow(
+                    color: Color.gray.opacity(0.7),
+                    radius: 20,
+                    y: 8
+                )
+                .overlay {
+                    HStack(spacing: 6) {
+                        Text("Angle")
+                            .foregroundColor(.white)
+                            .font(.largeTitle)
+
+                        Image(systemName: "angle")
+                            .font(.largeTitle.bold())
+                            .foregroundColor(.white)
+                    }
                 }
-                
-                Spacer()
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            Color.white.opacity(0.35),
+                            lineWidth: 1
+                        )
+                }
+
             Spacer()
-                
-        
         }
-       
+//            VStack {
+//                HStack(spacing: 6) {
+//                    Text("Angle")
+//                        .foregroundColor(.black)
+//                        .font(.system(size: 50).bold())
+//                    Image(systemName: "angle")
+//                        .font(.system(size: 50).bold())
+//                        .foregroundColor(.black)
+//                }
+//                
+//                Spacer()
+//                Spacer()
+//                
+//                
+//            }
     }
 
     private var lessonList: some View {
@@ -234,6 +281,8 @@ struct TestView: View {
                 "Composition",
                 icon: "aspectratio"
             )
+
+            Spacer()
         }
 
         if number == 14 {
@@ -241,6 +290,8 @@ struct TestView: View {
                 "Framing",
                 icon: "photo.artframe"
             )
+
+            Spacer()
         }
 
         if number == 21 {
@@ -248,9 +299,15 @@ struct TestView: View {
                 "Lighting",
                 icon: "sun.max.fill"
             )
+
+            Spacer()
         }
 
         lessonRow(number)
+
+        if number == 6 || number == 13 || number == 20 || number == 27 {
+            Spacer()
+        }
     }
 
     @ViewBuilder
@@ -263,6 +320,23 @@ struct TestView: View {
             HStack {
                 Spacer()
 
+//                RoundedRectangle(cornerRadius: 16)
+//                    .fill(Color.black)
+//                    .frame(width: 300, height: 90)
+//                    .shadow(
+//                        color: Color.gray.opacity(0.7),
+//                        radius: 20,
+//                        y: 8
+//                    )
+                RoundedRectangle(cornerRadius: 16)
+                    .glassEffect(in: .rect(cornerRadius: 16))
+                    .frame(width: 300, height: 90)
+                    .shadow(
+                        color: Color.gray.opacity(0.7),
+                        radius: 20,
+                        y: 8
+                    )
+                    .overlay {
                         HStack(spacing: 6) {
                             Text(title)
                                 .foregroundColor(.black)

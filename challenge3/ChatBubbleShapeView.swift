@@ -99,9 +99,8 @@ struct ChatBubbleShapeView: View {
 //        .padding(.horizontal, 15)
 //        .padding(.vertical, 10)
         .padding()
-        .glassEffect()
-        .clipShape(Rectangle())
-        .fixedSize(horizontal: false, vertical: true)
+        .glassEffect(in: .rect(cornerRadius: 16.0))
+//        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

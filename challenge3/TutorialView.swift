@@ -44,7 +44,7 @@ struct TutorialView: View {
                         Image(.eyelevel)
                             .resizable()
                             .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .padding()
                         
                     } else if pressedButton == "1"{
@@ -60,6 +60,7 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.closeup)
+                        
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -79,6 +80,7 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.longshot)
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -117,6 +119,7 @@ struct TutorialView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .padding()
                         Image(.highangle2)
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -133,6 +136,7 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.dutchangle)
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -151,10 +155,11 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.wideangle)
+        
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            .padding()       
+                            .padding()
                     } else if pressedButton == "7"{
                         Text("The Rule Of Thirds")
                             .padding()

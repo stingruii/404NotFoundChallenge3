@@ -336,7 +336,22 @@ struct ResultView: View {
         
         guard SystemLanguageModel.default.isAvailable else {
             
-            errorMessage = "Apple Intelligence is unavailable."
+            #if targetEnvironment(simulator)
+            errorMessage = "Apple Intelligence does not run in the Simulator. Test on a real iPhone."
+            #else
+            switch SystemLanguageModel.default.availability {
+            case .available:
+                errorMessage = "Apple Intelligence is unavailable."
+            case .unavailable(.deviceNotEligible):
+                errorMessage = "This device does not support Apple Intelligence."
+            case .unavailable(.appleIntelligenceNotEnabled):
+                errorMessage = "Turn on Apple Intelligence in Settings › Apple Intelligence & Siri."
+            case .unavailable(.modelNotReady):
+                errorMessage = "Apple Intelligence is still downloading its model. Try again later."
+            case .unavailable:
+                errorMessage = "Apple Intelligence is unavailable on this device."
+            }
+            #endif
             return
         }
         
