@@ -201,38 +201,24 @@ struct TestView: View {
     }
 
     private var titleHeader: some View {
-        HStack {
+        VStack {
             Spacer()
-
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.black)
-                .frame(width: 300, height: 90)
-                .shadow(
-                    color: Color.gray.opacity(0.7),
-                    radius: 20,
-                    y: 8
-                )
-                .overlay {
-                    HStack(spacing: 6) {
-                        Text("Angle")
-                            .foregroundColor(.white)
-                            .font(.largeTitle)
-
-                        Image(systemName: "angle")
-                            .font(.largeTitle.bold())
-                            .foregroundColor(.white)
-                    }
+                
+                HStack(spacing: 6) {
+                    Text("Angle")
+                        .foregroundColor(.black)
+                        .font(.system(size: 50).bold())
+                    Image(systemName: "angle")
+                        .font(.system(size: 50).bold())
+                        .foregroundColor(.black)
                 }
-                .overlay {
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(
-                            Color.white.opacity(0.35),
-                            lineWidth: 1
-                        )
-                }
-
+                
+                Spacer()
             Spacer()
+                
+        
         }
+       
     }
 
     private var lessonList: some View {
@@ -273,38 +259,23 @@ struct TestView: View {
         icon: String
     ) -> some View {
         VStack(spacing: 70) {
+            Spacer()
             HStack {
                 Spacer()
 
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.black)
-                    .frame(width: 300, height: 90)
-                    .shadow(
-                        color: Color.gray.opacity(0.7),
-                        radius: 20,
-                        y: 8
-                    )
-                    .overlay {
                         HStack(spacing: 6) {
                             Text(title)
-                                .foregroundColor(.white)
-                                .font(.largeTitle)
+                                .foregroundColor(.black)
+                                .font(.system(size: 50).bold())
 
                             Image(systemName: icon)
-                                .font(.title3.bold())
-                                .foregroundColor(.white)
+                                .font(.system(size: 50).bold())
+                                .foregroundColor(.black)
                         }
-                    }
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(
-                                Color.white.opacity(0.35),
-                                lineWidth: 1
-                            )
-                    }
 
                 Spacer()
             }
+            Spacer()
         }
     }
 
@@ -437,11 +408,11 @@ struct TestView: View {
 
     private func handleCameraDismiss() {
         resetCapture()
-
+        
         guard presentEndingAfterDismiss else { return }
-
+        
         presentEndingAfterDismiss = false
-
+        
         // Give the first cover time to finish dismissing before
         // presenting the ending flow.
         Task { @MainActor in
@@ -449,8 +420,8 @@ struct TestView: View {
             showEnding = true
         }
     }
-}
-
+    }
+    
 #Preview {
     TestView()
 }
