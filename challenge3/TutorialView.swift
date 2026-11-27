@@ -60,11 +60,11 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.closeup)
-                            .padding()
+                        
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                           
+                            .padding()
                         
                     } else if pressedButton == "2"{
                         
@@ -80,6 +80,7 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.longshot)
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -118,11 +119,11 @@ struct TutorialView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .padding()
                         Image(.highangle2)
-                            .padding()
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            
+                            .padding()
                     } else if pressedButton == "5"{
                         
                         Text("Dutch Angle photos:")
@@ -135,11 +136,11 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.dutchangle)
-                            .padding()
+                            
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                            
+                            .padding()
                     } else if pressedButton == "6"{
                         
                         Text("Wide Angle photos:")
@@ -154,11 +155,11 @@ struct TutorialView: View {
                             .padding()
                             .bold()
                         Image(.wideangle)
-                            .padding()
+        
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                                 
+                            .padding()
                     } else if pressedButton == "7"{
                         Text("The Rule Of Thirds")
                             .padding()
