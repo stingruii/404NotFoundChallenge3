@@ -44,7 +44,7 @@ struct TutorialView: View {
                         Image(.eyelevel)
                             .resizable()
                             .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .padding()
                         
                     } else if pressedButton == "1"{

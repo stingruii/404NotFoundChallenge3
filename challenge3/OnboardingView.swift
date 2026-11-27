@@ -2,6 +2,8 @@
 //  OnboardingView.swift
 //  challenge3
 //
+//  Created by Leung Lee Kiu on 26/11/26.
+//
 
 import SwiftUI
 
@@ -96,8 +98,10 @@ struct OnboardingView: View {
             }
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(.secondary)
-            .opacity(isLastPage ? 0 : 1)
-            .disabled(isLastPage)
+            .opacity(isLastPage ? 1 : 1)
+//            .disabled(isLastPage)
+            .padding()
+            .glassEffect()
         }
         .padding(.horizontal, 24)
         .padding(.top, 12)
@@ -302,14 +306,19 @@ struct OnboardingView: View {
             Image(systemName: "pawprint.fill")
                 .font(.system(size: 64, weight: .semibold))
                 .foregroundStyle(.white)
-
-            Image(systemName: "camera.fill")
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(.white)
-                .padding(14)
-                .background(Color.orange.gradient, in: Circle())
-                .shadow(color: .orange.opacity(0.4), radius: 10, y: 5)
-                .offset(x: 78, y: 68)
+            
+            ZStack{
+                Capsule()
+                    .foregroundStyle(Color(.orange))
+                    .frame(width: 50, height: 50)
+//                    .shadow(color: .orange.opacity(0.4), radius: 10, y: 5)
+                    .offset(x: 78, y: 68)
+                Image(systemName: "camera.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding()
+                    .offset(x: 78, y: 68)
+            }
         }
         .frame(height: 236)
         .accessibilityHidden(true)
