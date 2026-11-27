@@ -112,6 +112,102 @@ struct ResultView: View {
     
     var body: some View {
         
+        Group {
+            
+            switch feedbackMode {
+                
+            case .general:
+                
+                BackupView(
+                    image: image,
+                    assignmentImages: assignmentImages,
+                    assignToSlotID: assignToSlotID,
+                    completedLessons: completedLessons,
+                    onFinish: onFinish
+                )
+                
+            case .ai, .message:
+                
+                analysisContent
+            }
+        }
+        .navigationTitle("Result")
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            
+            if let existingReview {
+                
+                loadExistingReview(existingReview)
+                
+            } else if SystemLanguageModel.default.isAvailable {
+                
+                await analysePhoto()
+                
+                analysisFinished = hasComponentScores
+            }
+        }
+    }
+    
+    // MARK: - Feedback Mode
+    
+    private enum FeedbackMode {
+        
+        /// Apple Intelligence is available, or a saved review is being shown.
+        case ai
+        
+        /// The device cannot run Apple Intelligence, so show general guidance.
+        case general
+        
+        /// Apple Intelligence exists but the user needs to do something first.
+        case message(String)
+    }
+    
+    private var feedbackMode: FeedbackMode {
+        
+        // A saved AI review should always be shown, even if availability has
+        // changed since the review was created.
+        if existingReview != nil {
+            return .ai
+        }
+        
+        #if targetEnvironment(simulator)
+        // Apple Intelligence does not run in the Simulator, so use the
+        // general feedback view there for testing.
+        return .general
+        #else
+        switch SystemLanguageModel.default.availability {
+            
+        case .available:
+            return .ai
+            
+        case .unavailable(.deviceNotEligible):
+            return .general
+            
+        case .unavailable(.appleIntelligenceNotEnabled):
+            return .message("Apple Intelligence is turned off. Turn it on in Settings › Apple Intelligence & Siri to get personalised feedback.")
+            
+        case .unavailable(.modelNotReady):
+            return .message("Apple Intelligence is still downloading its model. Try again later.")
+            
+        case .unavailable:
+            return .general
+        }
+        #endif
+    }
+    
+    private var availabilityMessage: String? {
+        
+        if case .message(let text) = feedbackMode {
+            return text
+        }
+        
+        return nil
+    }
+    
+    // MARK: - AI Analysis Content
+    
+    private var analysisContent: some View {
+        
         ScrollView {
             
             VStack(spacing: 16) {
@@ -157,13 +253,16 @@ struct ResultView: View {
                 }
                 
                 
-                // MARK: Error Message
+                // MARK: Message
                 
-                if let errorMessage {
+                if let message = errorMessage ?? availabilityMessage {
                     
-                    Text(errorMessage)
+                    Text(message)
                         .foregroundColor(.red)
                         .font(.system(size: 14))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
                 }
                 
                 
@@ -193,24 +292,10 @@ struct ResultView: View {
                         .buttonStyle(.borderedProminent)
                         .disabled(!hasComponentScores)
                     }
-                }            }
+                }
+            }
             .padding(.horizontal)
             .padding(.bottom)
-        }
-        .navigationTitle("Result")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            
-            if let existingReview {
-                
-                loadExistingReview(existingReview)
-                
-            } else {
-                
-                await analysePhoto()
-                
-                analysisFinished = hasComponentScores
-            }
         }
     }
      
