@@ -97,7 +97,7 @@ struct OnboardingView: View {
                 finish()
             }
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(.secondary)
+            .foregroundStyle(.black)
             .opacity(isLastPage ? 1 : 1)
 //            .disabled(isLastPage)
             .padding()
